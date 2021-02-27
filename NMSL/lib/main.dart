@@ -37,15 +37,19 @@ class MyApp extends StatelessWidget {
                 DrawerHeader(
                   child:Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('帳戶資訊',style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 25
-                          ),),
-                          Icon(Icons.add_circle_outline,size: 30,color: Colors.blue,)
+                          ClipOval(
+                            child: Image.network(
+                              'https://www.steamxo.com/wp-content/uploads/2019/11/5ggL5q154529_874683.jpg',
+                              fit: BoxFit.cover,
+                              width: 70,
+                              height: 70,
+                            ),
+                          ),
                         ],
                       ),
                       Row(
@@ -56,7 +60,11 @@ class MyApp extends StatelessWidget {
                               color: Colors.white,
                               fontSize: 17
                             ),
-                          )
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 175),
+                            child: Icon(Icons.add_circle_outline,size: 30,color: Colors.blue,),
+                          ),
                         ],
                       ),
                       Row(
@@ -222,7 +230,7 @@ class _HomeState extends State<Home> {
     final height = size.height;
     print('width is $width; height is $height');
 
-    return Container(
+    return SingleChildScrollView(
         child: Center(
             child: Column(
       children: [
@@ -237,7 +245,7 @@ class _HomeState extends State<Home> {
             Container(
               width: 250,
               child: TextField(
-                autofocus: true,
+                autofocus: false,
                 decoration: InputDecoration(
                     fillColor: Colors.grey,
                     filled: true,
