@@ -1,10 +1,12 @@
 import 'package:NMSL/search.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:NMSL/home.dart';
 class App extends StatelessWidget {
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(brightness: Brightness.dark),
       home: AppPage(),
     );
@@ -29,7 +31,33 @@ class _AppState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Container(
+          margin: EdgeInsets.only(),
+          height: 40,
+          width: 220,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: Row(
+            children: [
+              Expanded(child: TextField(
+                autofocus: false,
+                decoration: InputDecoration(
+                    fillColor: Colors.grey,
+                    filled: true,
+                    contentPadding: EdgeInsets.all(0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    hintText: "搜尋",
+                    prefixIcon: Icon(Icons.search, color: Colors.black)),
+              ))
+            ],
+          ),
+        ),
+      ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
