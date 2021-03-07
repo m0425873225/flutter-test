@@ -22,7 +22,7 @@ class AppPage extends StatefulWidget {
 class _AppState extends State<AppPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [Home(), Search(),Setting()];
-  final List<Widget> _AppBar = [HomeBar(),SearchBar(),SettingsBar()];
+  final List<Widget> _appBar = [HomeBar(),SearchBar(),SettingsBar()];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -37,11 +37,37 @@ class _AppState extends State<AppPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Container(
-          child:_AppBar[_currentIndex]
+          child:_appBar[_currentIndex]
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.mail_outline),
+            onPressed: (){
+              showModalBottomSheet(context: context, builder: (BuildContext context){
+                return Container(
+                  height: 200,
+                  color: Colors.transparent,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Column(
+                          children: [
+                            ClipOval(
+                                child:Image.network('https://upload.wikimedia.org/wikipedia/zh/b/b6/Honkai_Impact_3.png',
+                              fit: BoxFit.cover,
+                              height: 70,
+                              width: 70,
+                            ))
+                          ],
+                        ),
+                      ),
+                      ListTile(),
+                      ListTile(),
+                    ],
+                  ),
+                );
+              });
+            }
           )
         ],
       ),
