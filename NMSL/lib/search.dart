@@ -65,40 +65,7 @@ class _SearchPage extends State<Search>{
         child: Center(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Icon(Icons.accessibility),
-                    ),
-                    Container(
-                      width: 250,
-                      child: TextField(
-                        autofocus: false,
-                        decoration: InputDecoration(
-                            fillColor: Colors.grey,
-                            filled: true,
-                            contentPadding: EdgeInsets.all(10.0),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                                borderSide: BorderSide(
-                                    color: Colors.black,
-                                    width: 3.0,
-                                    style: BorderStyle.solid)),
-                            hintText: "搜尋",
-                            prefixIcon: Icon(Icons.search, color: Colors.black)),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: Icon(Icons.settings),
-                    ),
-                  ],
-                ),
                 Container(
-                  /*padding:EdgeInsets.symmetric(vertical: 20.0, horizontal: 40),*/
                   child: _TESTLIST(listItems),
                 ),
               ],
@@ -109,7 +76,7 @@ class _SearchPage extends State<Search>{
     final width = size.width;
     final height = size.height;
     return Container(
-      height: 500,
+      height: 600,
       child: ListView.builder(
           itemCount: listItems.length,
           itemBuilder: (context, index) {

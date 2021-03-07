@@ -22,7 +22,7 @@ class AppPage extends StatefulWidget {
 class _AppState extends State<AppPage> {
   int _currentIndex = 0;
   final List<Widget> _children = [Home(), Search(),Setting()];
-  final List<Widget> _AppBar = [HomeBar(),SearchBar()];
+  final List<Widget> _AppBar = [HomeBar(),SearchBar(),SettingsBar()];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -35,9 +35,15 @@ class _AppState extends State<AppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Container(
           child:_AppBar[_currentIndex]
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.mail_outline),
+          )
+        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

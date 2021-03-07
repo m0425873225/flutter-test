@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 
-class HomeBar extends StatefulWidget{
+class HomeBar extends StatelessWidget {
   @override
-  _HomeBarState createState()=>_HomeBarState();
-}
-class _HomeBarState extends State<HomeBar>{
-  @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text('首頁'),
-          Icon(Icons.mail_outline),
         ],
       ),
     );
   }
 }
+
 
 class Home extends StatefulWidget {
   @override
