@@ -45,11 +45,12 @@ class _AppState extends State<AppPage> {
             onPressed: (){
               showModalBottomSheet(context: context, builder: (BuildContext context){
                 return Container(
-                  height: 200,
+                  height: 220,
                   color: Colors.transparent,
                   child: Column(
                     children: [
                       Container(
+                        margin: EdgeInsets.all(2),
                         child: Column(
                           children: [
                             ClipOval(
@@ -57,12 +58,21 @@ class _AppState extends State<AppPage> {
                               fit: BoxFit.cover,
                               height: 70,
                               width: 70,
-                            ))
+                            )),
+                            Text('為美好的世界而戰'),
+                            Divider(height:5,color:Colors.white)
                           ],
                         ),
                       ),
-                      ListTile(),
-                      ListTile(),
+                      ListTile(
+                        leading: Icon(Icons.list),
+                        title: Text('列表'),
+                      ),
+                      Divider(height:2,color:Colors.grey),
+                      ListTile(
+                        leading: Icon(Icons.list),
+                        title: Text('列表2'),
+                      ),
                     ],
                   ),
                 );
@@ -110,10 +120,14 @@ class _AppState extends State<AppPage> {
                         'NMSL',
                         style: TextStyle(color: Colors.white, fontSize: 17),
                       ),
-                      Icon(
-                        Icons.add_circle_outline,
-                        size: 30,
-                        color: Colors.blue,
+                      SizedBox(
+                        height: 30,
+                        width: 30,
+                        child:IconButton(
+                            icon:Icon(
+                              Icons.add_circle_outline, size: 30,
+                              color: Colors.blue,)
+                            , onPressed: null)
                       ),
                     ],
                   ),
