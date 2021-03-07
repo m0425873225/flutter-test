@@ -2,6 +2,7 @@ import 'package:NMSL/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:NMSL/home.dart';
+import 'package:NMSL/setting.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -20,42 +21,22 @@ class AppPage extends StatefulWidget {
 
 class _AppState extends State<AppPage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [Home(), Search()];
-
+  final List<Widget> _children = [Home(), Search(),Setting()];
+  final List<Widget> _AppBar = [HomeBar(),SearchBar()];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Container(
-          margin: EdgeInsets.only(),
-          height: 40,
-          width: 220,
-          decoration: BoxDecoration(
-            color: Colors.grey,
-            borderRadius: BorderRadius.circular(15)
-          ),
-          child: Row(
-            children: [
-              Expanded(child: TextField(
-                autofocus: false,
-                decoration: InputDecoration(
-                    fillColor: Colors.grey,
-                    filled: true,
-                    contentPadding: EdgeInsets.all(0),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    hintText: "搜尋",
-                    prefixIcon: Icon(Icons.search, color: Colors.black)),
-              ))
-            ],
-          ),
+          child:_AppBar[_currentIndex]
         ),
       ),
       body: _children[_currentIndex],
