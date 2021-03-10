@@ -92,114 +92,14 @@ class _AppState extends State<AppPage> {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ClipOval(
-                        child: Image.network(
-                          'https://www.steamxo.com/wp-content/uploads/2019/11/5ggL5q154529_874683.jpg',
-                          fit: BoxFit.cover,
-                          width: 70,
-                          height: 70,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'NMSL',
-                        style: TextStyle(color: Colors.white, fontSize: 17),
-                      ),
-                      SizedBox(
-                        height: 30,
-                        width: 30,
-                        child:IconButton(
-                            icon:Icon(
-                              Icons.add_circle_outline, size: 30,
-                              color: Colors.blue,)
-                            , onPressed: null)
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'yan@gmail.com',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        '@fuckUbitch',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-              ),
+        child: Container(
+          width: MediaQuery.of(context).size.width*0.7,
+          child: SafeArea(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: DrawerChange(),
             ),
-            ListTile(
-              leading: Icon(Icons.person_outline),
-              title: Text(
-                '個人資訊',
-                style: TextStyle(fontSize: 20),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.list),
-              title: Text(
-                '列表',
-                style: TextStyle(fontSize: 20),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.ac_unit),
-              title: Text(
-                'test1',
-                style: TextStyle(fontSize: 20),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.star),
-              title: Text(
-                'test2',
-                style: TextStyle(fontSize: 20),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
