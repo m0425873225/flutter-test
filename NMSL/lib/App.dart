@@ -97,7 +97,7 @@ class _AppState extends State<AppPage> {
           child: SafeArea(
             child: Container(
               height: MediaQuery.of(context).size.height,
-              child: DrawerChange(),
+              child:DrawerChange(),
             ),
           ),
         ),

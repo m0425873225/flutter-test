@@ -85,11 +85,7 @@ class _DrawerChange extends State<DrawerChange> {
             ),
           ),
           Container(
-            child: Column(
-              children: [
-                Text('test')
-              ],
-            ),
+            child: drawerBottom?DrawerClose():DrawerOpen()
           )
         ],
       ),
@@ -98,11 +94,12 @@ class _DrawerChange extends State<DrawerChange> {
 }
 
 class DrawerOpen extends StatelessWidget {
-  double listSize = 20;
+  final double listSize = 20;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Expanded(
       child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           ListTile(
             leading: Icon(Icons.person_outline),
@@ -151,11 +148,12 @@ class DrawerOpen extends StatelessWidget {
 }
 
 class DrawerClose extends StatelessWidget {
-  double listSize = 20;
+  final double listSize = 20;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Expanded(
       child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           ListTile(
             leading: Icon(Icons.person),
@@ -170,7 +168,7 @@ class DrawerClose extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.person_outline),
             title: Text(
-              '立即加入 >< ',
+              '立即加入 > < ',
               style: TextStyle(fontSize: listSize),
             ),
             onTap: () {
