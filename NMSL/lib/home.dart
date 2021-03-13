@@ -22,10 +22,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Map> datas =[];
 
   Future Apitest() async{
     try {
-      final data =  await http.get('https://jsonplaceholder.typicode.com/posts');
+      final data =  await http.get('https://jsonplaceholder.typicode.com/todos');
       if(data.statusCode == 200){
         List dk =  json.decode(data.body) as List;
         return dk.map((e) => TestJson.fromJson(e)).toList();
@@ -39,13 +40,20 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:Center(
-        child:InkWell(
-          onTap: ()async{
-            this.Apitest().then((value) => null);
-          },
-          child: Text('test'),
-        )
+      child:Column(
+        children: [
+          InkWell(
+            onTap: ()async{
+              this.Apitest()
+            },
+          ),
+          Expanded(child: ListView.builder(
+            shrinkWrap:true,
+            itemBuilder: (context,index){
+              title:Text('${this.}'),
+            },
+         ))
+        ],
       )
       );
   }
@@ -56,15 +64,15 @@ class TestJson {
   int userId;
   int id;
   String title;
-  String body;
+  bool completed;
 
-  TestJson({this.userId, this.id, this.title, this.body});
+  TestJson({this.userId, this.id, this.title, this.completed});
 
   TestJson.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     id = json['id'];
     title = json['title'];
-    body = json['body'];
+    completed = json['completed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,7 +80,7 @@ class TestJson {
     data['userId'] = this.userId;
     data['id'] = this.id;
     data['title'] = this.title;
-    data['body'] = this.body;
+    data['completed'] = this.completed;
     return data;
   }
 }
