@@ -22,20 +22,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Map> datas =[];
+  List<TestJson> datas =[];
 
-  Future Apitest() async{
+  Future<List<TestJson>> Apitest() async{
     try {
       final data =  await http.get('https://jsonplaceholder.typicode.com/todos');
       if(data.statusCode == 200){
-        List dk =  json.decode(data.body) as List;
-        return dk.map((e) => TestJson.fromJson(e)).toList();
+        List datas =  json.decode(data.body) as List;
+        return datas.map((e) => TestJson.fromJson(e)).toList();
       } else if (data.statusCode == 404){return null;}
       else{return null;}
     }
     catch (e) {
       print('error');
     }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    this.Apitest().then((value) {
+      setState(() {
+        this.datas = value;
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -53,7 +63,7 @@ class _HomeState extends State<Home> {
             child:Text('test')
           ),
           (datas == null)?
-              Container():
+          Container():
           Expanded(child: ListView.builder(
             shrinkWrap:true,
             itemBuilder: (context,index){
@@ -62,6 +72,8 @@ class _HomeState extends State<Home> {
                 itemCount: this.datas.length,
                 itemBuilder: (context,index){
                   return ListTile(
+                    title: Text('${datas[index].title}'),
+                    subtitle: Text('${datas[index].completed}'),
                   );
                 },
               );

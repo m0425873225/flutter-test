@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:NMSL/home.dart';
 import 'package:NMSL/setting.dart';
 import 'package:NMSL/DrawerChange.dart';
+import 'package:NMSL/Reserve.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class AppPage extends StatefulWidget {
 
 class _AppState extends State<AppPage> {
   int _currentIndex = 0;
-  final List<Widget> _children = [Home(), Search(),Setting()];
-  final List<Widget> _appBar = [HomeBar(),SearchBar(),SettingsBar()];
+  final List<Widget> _children = [Home(), Search(),Setting(),Reserve()];
+  final List<Widget> _appBar = [HomeBar(),SearchBar(),SettingsBar(),ReserveBar()];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -83,12 +84,14 @@ class _AppState extends State<AppPage> {
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '首頁'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: '搜尋'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
+          BottomNavigationBarItem(icon: Icon(Icons.ac_unit),label:'測試'),
         ],
       ),
       drawer: Drawer(
