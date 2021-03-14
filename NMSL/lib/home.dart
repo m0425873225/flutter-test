@@ -44,13 +44,27 @@ class _HomeState extends State<Home> {
         children: [
           InkWell(
             onTap: ()async{
-              this.Apitest()
+              this.Apitest().then((result){
+                setState(() {
+                  this.datas = result;
+                });
+              });
             },
+            child:Text('test')
           ),
+          (datas == null)?
+              Container():
           Expanded(child: ListView.builder(
             shrinkWrap:true,
             itemBuilder: (context,index){
-              title:Text('${this.}'),
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: this.datas.length,
+                itemBuilder: (context,index){
+                  return ListTile(
+                  );
+                },
+              );
             },
          ))
         ],
