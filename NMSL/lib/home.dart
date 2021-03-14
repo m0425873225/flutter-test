@@ -22,23 +22,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<TestJson> datas =[];
+  List<TestJson> datas ;
 
   Future<List<TestJson>> Apitest() async{
     try {
       final data =  await http.get('https://jsonplaceholder.typicode.com/todos');
       if(data.statusCode == 200){
-        List datas =  json.decode(data.body) as List;
-        return datas.map((e) => TestJson.fromJson(e)).toList();
+        List dk =  json.decode(data.body) as List;
+        return dk.map((e) => TestJson.fromJson(e)).toList();
       } else if (data.statusCode == 404){return null;}
       else{return null;}
     }
     catch (e) {
-      print('error');
+      throw Exception(e);
     }
   }
-
-  @override
+  
   void initState(){
     super.initState();
     this.Apitest().then((value) {
