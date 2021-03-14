@@ -23,6 +23,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<TestJson> datas ;
+  Future<List<TestJson>> _futuredata;
 
   Future<List<TestJson>> Apitest() async{
     try {
@@ -37,21 +38,45 @@ class _HomeState extends State<Home> {
       throw Exception(e);
     }
   }
-  
+
+  FutureBuilder _futureBuilder(){
+    return FutureBuilder(
+      future: this._futuredata,
+      builder: (context,projectSnap){
+        if ((projectSnap.connectionState == ConnectionState.none)||
+            (projectSnap.hasData == null)||
+            (projectSnap.data == null))
+            {return Container();}
+        else{
+          this.datas = projectSnap.data;
+          return Expanded(
+          child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: this.datas.length,
+          itemBuilder: (context,index){
+            return ListTile(
+              title: Text('${datas[index].title}'),
+              subtitle: Text('${datas[index].completed}'),
+            );
+          },
+        ),
+              );
+        }
+      });
+  }
+
+  @override
   void initState(){
     super.initState();
-    this.Apitest().then((value) {
-      setState(() {
-        this.datas = value;
-      });
-    });
+    this._futuredata = this.Apitest();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child:Column(
         children: [
-          InkWell(
+          /*InkWell(
             onTap: ()async{
               this.Apitest().then((result){
                 setState(() {
@@ -60,24 +85,10 @@ class _HomeState extends State<Home> {
               });
             },
             child:Text('test')
-          ),
-          (datas == null)?
-          Container():
-          Expanded(child: ListView.builder(
-            shrinkWrap:true,
-            itemBuilder: (context,index){
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: this.datas.length,
-                itemBuilder: (context,index){
-                  return ListTile(
-                    title: Text('${datas[index].title}'),
-                    subtitle: Text('${datas[index].completed}'),
-                  );
-                },
-              );
-            },
-         ))
+          ),*/
+          Container(
+            child:_futureBuilder(),
+          )
         ],
       )
       );
