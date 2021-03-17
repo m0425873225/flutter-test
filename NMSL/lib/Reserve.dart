@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:NMSL/url/export.dart';
 
 class ReserveBar extends StatelessWidget {
   @override
@@ -22,61 +23,64 @@ class Reserve extends StatefulWidget {
 }
 
 class _ReserveState extends State<Reserve> {
-  List<ApiHm> hmApi ;
-  Future<List<ApiHm>> _futureHm;
-  Future<List<ApiHm>> ApiHmtest() async{
+
+  Future _landRateFuture;
+
+  Future<List<LandTaxRateData>> futureAPI () async {
     try {
-      final data =  await http.get('https://javiercbk.github.io/json_to_dart/');
-      if(data.statusCode == 200){
-        List hm =  json.decode(data.body) as List;
-        return hm.map((e) => ApiHm.fromJson(e)).toList();
-      } else if (data.statusCode == 404){return null;}
-      else{return null;}
-    }
-    catch (e) {
+      final data = await http.get(ApiRoutes().govLandRateApi);
+      if(data.statusCode == 200) {
+        if(json.decode(data.body)['success']){
+          List dk = json.decode(data.body)['data'] as List;
+          return dk.map((e) => LandTaxRateData.fromJson(e)).toList();
+        }
+      }
+      return null;
+    } catch(e) {
       throw Exception(e);
     }
   }
 
-  FutureBuilder _futureHmapi(){
-    return FutureBuilder(
-        future: this._futureHm,
-        builder: (context,projectSnap){
-          if ((projectSnap.connectionState == ConnectionState.none)||
-              (projectSnap.hasData == null)||
-              (projectSnap.data == null))
-          {return Container();}
-          else{
-            this.hmApi = projectSnap.data;
-            return Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: this.hmApi.length,
-                itemBuilder: (context,index){
-                  for(int i =0;i <= 10 ; i++)
-                    {return ListTile(
-                      title: Text('${hmApi[index].name}'),
-                      subtitle: Text('${hmApi[index].shellUrl}'),
-                    );
-                    }
-                },
-              ),
-            );
-          }
-        });
+  FutureBuilder _futureBuilder(){
+    return FutureBuilder<List<LandTaxRateData>>(
+      future: _landRateFuture,
+      builder: (context, projectSnap) {
+        if ((projectSnap.connectionState == ConnectionState.none) ||
+            (projectSnap.hasData == null) ||
+            (projectSnap.data == null)) {
+          return Container();
+        } else {
+          List<LandTaxRateData> data = projectSnap.data;
+          return Expanded(
+            child: ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(data[index].item),
+                  subtitle: Text(data[index].value),
+                  trailing: Text(data[index].unit),
+                );
+              },
+            ),
+          );
+        }
+      },
+    );
   }
+
   @override
   void initState(){
+    this._landRateFuture = this.futureAPI();
     super.initState();
-    this._futureHm = this.ApiHmtest();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: [
           Container(
-            child: _futureHmapi(),
+            child: _futureBuilder(),
           )
         ],
       ),
@@ -84,92 +88,34 @@ class _ReserveState extends State<Reserve> {
   }
 }
 
-class ApiHm {
-  BaseLayer baseLayer;
-  String condimentUrl;
-  String url;
-  Null mixinUrl;
-  String name;
-  String slug;
-  Null seasoningUrl;
-  String recipe;
-  Null shellUrl;
-  BaseLayer condiment;
-  String baseLayerUrl;
+class LandTaxRateData {
+  int seq;
+  String year;
+  String item;
+  String category;
+  String unit;
+  String value;
 
-  ApiHm(
-      {this.baseLayer,
-        this.condimentUrl,
-        this.url,
-        this.mixinUrl,
-        this.name,
-        this.slug,
-        this.seasoningUrl,
-        this.recipe,
-        this.shellUrl,
-        this.condiment,
-        this.baseLayerUrl});
+  LandTaxRateData({
+    this.seq, this.year, this.item, this.category, this.unit, this.value,});
 
-  ApiHm.fromJson(Map<String, dynamic> json) {
-    baseLayer = json['base_layer'] != null
-        ? new BaseLayer.fromJson(json['base_layer'])
-        : null;
-    condimentUrl = json['condiment_url'];
-    url = json['url'];
-    mixinUrl = json['mixin_url'];
-    name = json['name'];
-    slug = json['slug'];
-    seasoningUrl = json['seasoning_url'];
-    recipe = json['recipe'];
-    shellUrl = json['shell_url'];
-    condiment = json['condiment'] != null
-        ? new BaseLayer.fromJson(json['condiment'])
-        : null;
-    baseLayerUrl = json['base_layer_url'];
+  LandTaxRateData.fromJson(Map<String, dynamic> json) {
+    seq = json['seq'];
+    year = json['資料年期別'];
+    item = json['統計項目'];
+    category = json['稅率別'];
+    unit = json['資料單位'];
+    value = json['值'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.baseLayer != null) {
-      data['base_layer'] = this.baseLayer.toJson();
-    }
-    data['condiment_url'] = this.condimentUrl;
-    data['url'] = this.url;
-    data['mixin_url'] = this.mixinUrl;
-    data['name'] = this.name;
-    data['slug'] = this.slug;
-    data['seasoning_url'] = this.seasoningUrl;
-    data['recipe'] = this.recipe;
-    data['shell_url'] = this.shellUrl;
-    if (this.condiment != null) {
-      data['condiment'] = this.condiment.toJson();
-    }
-    data['base_layer_url'] = this.baseLayerUrl;
-    return data;
-  }
-}
-
-class BaseLayer {
-  String recipe;
-  String name;
-  String url;
-  String slug;
-
-  BaseLayer({this.recipe, this.name, this.url, this.slug});
-
-  BaseLayer.fromJson(Map<String, dynamic> json) {
-    recipe = json['recipe'];
-    name = json['name'];
-    url = json['url'];
-    slug = json['slug'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['recipe'] = this.recipe;
-    data['name'] = this.name;
-    data['url'] = this.url;
-    data['slug'] = this.slug;
+    data['seq'] = this.seq;
+    data['year'] = this.year;
+    data['item'] = this.item;
+    data['category'] = this.category;
+    data['unit'] = this.unit;
+    data['value'] = this.value;
     return data;
   }
 }
