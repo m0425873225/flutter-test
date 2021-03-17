@@ -26,7 +26,7 @@ class _ReserveState extends State<Reserve> {
   Future<List<ApiHm>> _futureHm;
   Future<List<ApiHm>> ApiHmtest() async{
     try {
-      final data =  await http.get('https://javiercbk.github.io/json_to_dart/');
+      final data =  await http.get('http://taco-randomizer.herokuapp.com/random/?full-taco=true');
       if(data.statusCode == 200){
         List hm =  json.decode(data.body) as List;
         return hm.map((e) => ApiHm.fromJson(e)).toList();

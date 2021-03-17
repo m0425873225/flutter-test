@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
 
   Future<List<TestJson>> Apitest() async{
     try {
-      final data =  await http.get('https://jsonplaceholder.typicode.com/todos');
+      Uri _uri = Uri.parse('https://jsonplaceholder.typicode.com/todos');
+      final data =  await http.get(_uri);
       if(data.statusCode == 200){
         List dk =  json.decode(data.body) as List;
         return dk.map((e) => TestJson.fromJson(e)).toList();
