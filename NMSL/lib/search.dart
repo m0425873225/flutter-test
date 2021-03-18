@@ -73,9 +73,16 @@ class _SearchPage extends State<Search> {
                 shrinkWrap: true,
                 itemCount: this.blockchaindata.length,
                 itemBuilder: (context,index){
-                  return ListTile(
-                    title: Text('${blockchaindata[index].name}'),
-                    subtitle: Text('${blockchaindata[index].priceUsd}'),
+                  return Container(
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Text('BTC',style: TextStyle(color: Colors.grey,fontSize: 10),)
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -91,6 +98,46 @@ class _SearchPage extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemBuilder: (context,index){
+          return Container(
+            padding: EdgeInsets.all(50.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              verticalDirection: VerticalDirection.down,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('BTC',style: TextStyle(color: Colors.grey,fontSize: 20),),
+                    Row(
+                      children: [
+                        Text('50.0',style: TextStyle(color: Colors.amberAccent,fontSize: 50),),
+                        Text('usd',style: TextStyle(color: Colors.white,fontSize: 10),)
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('5.27',style: TextStyle(color: Colors.white,fontSize: 17),),
+                    Text('0.57',style: TextStyle(color: Colors.white,fontSize: 17),),
+                    Text('0.43',style: TextStyle(color: Colors.white,fontSize: 17),)
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+    /*return Container(
       child: Column(
         children: [
           Container(
@@ -98,7 +145,7 @@ class _SearchPage extends State<Search> {
           )
         ],
       ),
-    );
+    );*/
   }
 }
 
