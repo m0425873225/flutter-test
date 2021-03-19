@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -68,17 +69,58 @@ class _SearchPage extends State<Search> {
           {return Container();}
           else{
             this.blockchaindata= projectSnap.data;
-            return Expanded(
+            return Container(
               child: ListView.builder(
+                padding: EdgeInsets.all(10.0),
                 shrinkWrap: true,
-                itemCount: this.blockchaindata.length,
+                itemCount: blockchaindata.length,
                 itemBuilder: (context,index){
                   return Container(
+                    padding: EdgeInsets.all(50.0),
+                    decoration: new BoxDecoration(
+                      border: new Border.all(color: Colors.white, width: 0.5),
+                    ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      verticalDirection: VerticalDirection.down,
                       children: [
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('BTC',style: TextStyle(color: Colors.grey,fontSize: 10),)
+                            Text('${blockchaindata[index].symbol}',style: TextStyle(color: Colors.grey,fontSize: 20),),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.zero,
+                                  child: Row(
+                                    children: [
+                                      Text('${blockchaindata[index].priceUsd}',style: TextStyle(color: Colors.amberAccent,fontSize: 50),),
+                                      Text('usd',style: TextStyle(color: Colors.white,fontSize: 10),)
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        VerticalDivider(color: Colors.white,),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.zero,
+                              child: Column(
+                                children: [
+                                  Text('${blockchaindata[index].percentChange1h}',style: TextStyle(color: Colors.white,fontSize: 17),),
+                                  Text('${blockchaindata[index].percentChange24h}',style: TextStyle(color: Colors.white,fontSize: 17),),
+                                  Text('${blockchaindata[index].percentChange7d}',style: TextStyle(color: Colors.white,fontSize: 17),)
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ],
@@ -98,46 +140,6 @@ class _SearchPage extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemBuilder: (context,index){
-          return Container(
-            padding: EdgeInsets.all(50.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              verticalDirection: VerticalDirection.down,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('BTC',style: TextStyle(color: Colors.grey,fontSize: 20),),
-                    Row(
-                      children: [
-                        Text('50.0',style: TextStyle(color: Colors.amberAccent,fontSize: 50),),
-                        Text('usd',style: TextStyle(color: Colors.white,fontSize: 10),)
-                      ],
-                    ),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text('5.27',style: TextStyle(color: Colors.white,fontSize: 17),),
-                    Text('0.57',style: TextStyle(color: Colors.white,fontSize: 17),),
-                    Text('0.43',style: TextStyle(color: Colors.white,fontSize: 17),)
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-    /*return Container(
       child: Column(
         children: [
           Container(
@@ -145,7 +147,7 @@ class _SearchPage extends State<Search> {
           )
         ],
       ),
-    );*/
+    );
   }
 }
 
