@@ -47,7 +47,7 @@ class _SearchPage extends State<Search> {
       Uri _uri = Uri.parse('https://api.coinlore.net/api/tickers/');
       final data =  await http.get(_uri);
       if(data.statusCode == 200){
-        if(json.decode(data.body)['success']){
+        if(jsonDecode(data.body)['info']['coins_num']is int){
           List dk = json.decode(data.body)['data'] as List;
           return dk.map((e) => blockchainApi.fromJson(e)).toList();
         }
@@ -66,10 +66,12 @@ class _SearchPage extends State<Search> {
           if ((projectSnap.connectionState == ConnectionState.none)||
               (projectSnap.hasData == null)||
               (projectSnap.data == null))
-          {return Container();}
+          {return Container(
+            child: Text('test'),
+          );}
           else{
             this.blockchaindata= projectSnap.data;
-            return Container(
+            return Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.all(10.0),
                 shrinkWrap: true,
