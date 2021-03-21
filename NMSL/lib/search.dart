@@ -3,20 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class SearchBar extends StatefulWidget{
+class SearchBar extends StatefulWidget {
   @override
-  _SearchBarState createState()=>_SearchBarState();
+  _SearchBarState createState() => _SearchBarState();
 }
-class _SearchBarState extends State<SearchBar>{
+
+class _SearchBarState extends State<SearchBar> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(),
       height: 40,
       width: 220,
-      child:  Row(
+      child: Row(
         children: [
-          Expanded(child: TextField(
+          Expanded(
+              child: TextField(
             autofocus: false,
             decoration: InputDecoration(
                 fillColor: Colors.grey,
@@ -36,49 +38,52 @@ class _SearchBarState extends State<SearchBar>{
 
 class Search extends StatefulWidget {
   @override
-  _SearchPage createState() =>_SearchPage();
+  _SearchPage createState() => _SearchPage();
 }
 
 class _SearchPage extends State<Search> {
-  List<blockchainApi> blockchaindata ;
+  List<blockchainApi> blockchaindata;
   Future<List<blockchainApi>> _futureBlockchain;
-  Future<List<blockchainApi>> BlockchainApi() async{
+  Future<List<blockchainApi>> BlockchainApi() async {
     try {
       Uri _uri = Uri.parse('https://api.coinlore.net/api/tickers/');
-      final data =  await http.get(_uri);
-      if(data.statusCode == 200){
-        if(jsonDecode(data.body)['info']['coins_num']is int){
+      final data = await http.get(_uri);
+      if (data.statusCode == 200) {
+        if (jsonDecode(data.body)['info']['coins_num'] is int) {
           List dk = json.decode(data.body)['data'] as List;
           return dk.map((e) => blockchainApi.fromJson(e)).toList();
         }
-      } else if (data.statusCode == 404){return null;}
-      else{return null;}
-    }
-    catch (e) {
+      } else if (data.statusCode == 404) {
+        return null;
+      } else {
+        return null;
+      }
+    } catch (e) {
       throw Exception(e);
     }
   }
 
-  FutureBuilder _futureHmapi(){
+  FutureBuilder _futureHmapi() {
     return FutureBuilder(
         future: this._futureBlockchain,
-        builder: (context,projectSnap){
-          if ((projectSnap.connectionState == ConnectionState.none)||
-              (projectSnap.hasData == null)||
-              (projectSnap.data == null))
-          {return Container(
-            child: Text('test'),
-          );}
-          else{
-            this.blockchaindata= projectSnap.data;
+        builder: (context, projectSnap) {
+          if ((projectSnap.connectionState == ConnectionState.none) ||
+              (projectSnap.hasData == null) ||
+              (projectSnap.data == null)) {
+            return Container(
+              child: Text('test'),
+            );
+          } else {
+            this.blockchaindata = projectSnap.data;
             return Expanded(
               child: ListView.builder(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.only(left: 10,right: 10),
                 shrinkWrap: true,
                 itemCount: blockchaindata.length,
-                itemBuilder: (context,index){
+                itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.all(50.0),
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    padding: EdgeInsets.symmetric(vertical: 30),
                     decoration: new BoxDecoration(
                       border: new Border.all(color: Colors.white, width: 0.5),
                     ),
@@ -88,42 +93,108 @@ class _SearchPage extends State<Search> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       verticalDirection: VerticalDirection.down,
                       children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('${blockchaindata[index].symbol}',style: TextStyle(color: Colors.grey,fontSize: 20),),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.zero,
-                                  child: Row(
-                                    children: [
-                                      Text('${blockchaindata[index].priceUsd}',style: TextStyle(color: Colors.amberAccent,fontSize: 50),),
-                                      Text('usd',style: TextStyle(color: Colors.white,fontSize: 10),)
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        VerticalDivider(color: Colors.white,),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.zero,
-                              child: Column(
+                        Container(
+                          padding: EdgeInsets.only(left: 5),
+                          width: MediaQuery.of(context).size.width * 0.55,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${blockchaindata[index].symbol}',
+                                style: TextStyle(
+                                    color: Colors.grey, fontSize: 20),
+                              ),
+                              Row(
                                 children: [
-                                  Text('${blockchaindata[index].percentChange1h}',style: TextStyle(color: Colors.white,fontSize: 17),),
-                                  Text('${blockchaindata[index].percentChange24h}',style: TextStyle(color: Colors.white,fontSize: 17),),
-                                  Text('${blockchaindata[index].percentChange7d}',style: TextStyle(color: Colors.white,fontSize: 17),)
+                                  Container(
+                                    padding: EdgeInsets.zero,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '${blockchaindata[index].priceUsd}',
+                                          style: TextStyle(
+                                              color: Colors.amberAccent,
+                                              fontSize: 40),
+                                        ),
+                                        Text(
+                                          'usd',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10),
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
-                            )
-                          ],
+                            ],
+                          ),
+                        ),
+                        Container(height:100, child: VerticalDivider(color: Colors.white)),
+                        Flexible(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                padding: EdgeInsets.only(right: 10,left: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.trending_up),
+                                            Text('1H:'),
+                                          ],
+                                        ),
+                                        Text(
+                                          '${blockchaindata[index].percentChange1h}',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 17),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.trending_up),
+                                            Text('1D:'),
+                                          ],
+                                        ),
+                                        Text(
+                                          '${blockchaindata[index].percentChange24h}',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 17),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.trending_up),
+                                            Text('7D:'),
+                                          ],
+                                        ),
+                                        Text(
+                                          '${blockchaindata[index].percentChange7d}',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 17),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -134,11 +205,13 @@ class _SearchPage extends State<Search> {
           }
         });
   }
+
   @override
-  void initState(){
+  void initState() {
     this._futureBlockchain = this.BlockchainApi();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -152,7 +225,6 @@ class _SearchPage extends State<Search> {
     );
   }
 }
-
 
 class blockchainApi {
   String id;
@@ -174,21 +246,21 @@ class blockchainApi {
 
   blockchainApi(
       {this.id,
-        this.symbol,
-        this.name,
-        this.nameid,
-        this.rank,
-        this.priceUsd,
-        this.percentChange24h,
-        this.percentChange1h,
-        this.percentChange7d,
-        this.priceBtc,
-        this.marketCapUsd,
-        this.volume24,
-        this.volume24a,
-        this.csupply,
-        this.tsupply,
-        this.msupply});
+      this.symbol,
+      this.name,
+      this.nameid,
+      this.rank,
+      this.priceUsd,
+      this.percentChange24h,
+      this.percentChange1h,
+      this.percentChange7d,
+      this.priceBtc,
+      this.marketCapUsd,
+      this.volume24,
+      this.volume24a,
+      this.csupply,
+      this.tsupply,
+      this.msupply});
 
   blockchainApi.fromJson(Map<String, dynamic> json) {
     id = json['id'];
