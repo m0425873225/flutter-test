@@ -76,132 +76,67 @@ class _SearchPage extends State<Search> {
           } else {
             this.blockchaindata = projectSnap.data;
             return Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(left: 10,right: 10),
-                shrinkWrap: true,
-                itemCount: blockchaindata.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    decoration: new BoxDecoration(
-                      border: new Border.all(color: Colors.white, width: 0.5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      verticalDirection: VerticalDirection.down,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 5),
-                          width: MediaQuery.of(context).size.width * 0.55,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${blockchaindata[index].symbol}',
-                                style: TextStyle(
-                                    color: Colors.grey, fontSize: 20),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.zero,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          '${blockchaindata[index].priceUsd}',
-                                          style: TextStyle(
-                                              color: Colors.amberAccent,
-                                              fontSize: 40),
-                                        ),
-                                        Text(
-                                          'usd',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+              child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 10,right: 10),
+                  child:  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Currency',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
                         ),
-                        Container(height:100, child: VerticalDivider(color: Colors.white)),
-                        Flexible(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                padding: EdgeInsets.only(right: 10,left: 10),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(Icons.trending_up),
-                                            Text('1H:'),
-                                          ],
-                                        ),
-                                        Text(
-                                          '${blockchaindata[index].percentChange1h}',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 17),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(Icons.trending_up),
-                                            Text('1D:'),
-                                          ],
-                                        ),
-                                        Text(
-                                          '${blockchaindata[index].percentChange24h}',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 17),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(Icons.trending_up),
-                                            Text('7D:'),
-                                          ],
-                                        ),
-                                        Text(
-                                          '${blockchaindata[index].percentChange7d}',
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 17),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                      ),
+                      Text(
+                        'Market Cap/24h',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
                         ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            );
+                      ),
+                      Text(
+                        'Price/24h',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Divider(color: Colors.white,height: 10,),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: this.blockchaindata.length,
+                  itemBuilder: (context,index){
+                    return Container(
+                      padding: EdgeInsets.only(left: 10,right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            child:Column(
+                              children: [
+                                Text('${blockchaindata[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Text('${blockchaindata[index].marketCapUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
+                          ),
+                          Container(
+                            child: Text('${blockchaindata[index].priceUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),);
           }
         });
   }
