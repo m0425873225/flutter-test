@@ -76,12 +76,14 @@ class _SearchPage extends State<Search> {
               (projectSnap.hasData == null) ||
               (projectSnap.data == null)) {
             return Container(
-                child:FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    fadeInDuration: const Duration(seconds: 1),
-                    image: 'https://picsum.photos/350?image=9'
-                )
+              height: ,
+              width: ,
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.grey[200],
+                valueColor: AlwaysStoppedAnimation(Colors.blue),
+              ),
             );
+
           } else {
             this.blockchaindata = projectSnap.data;
             return Expanded(
