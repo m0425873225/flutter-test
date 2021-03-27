@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:transparent_image/transparent_image.dart';
+import 'package:NMSL/DropBottom.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -9,6 +11,9 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
+  List<DropdownMenuItem<String>> sortItems = [];
+  String _selectedSort = '排序';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +34,7 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 hintText: "搜尋",
                 prefixIcon: Icon(Icons.search, color: Colors.black)),
-          ))
+          )),
         ],
       ),
     );
@@ -71,7 +76,11 @@ class _SearchPage extends State<Search> {
               (projectSnap.hasData == null) ||
               (projectSnap.data == null)) {
             return Container(
-              child: Text('test'),
+                child:FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    fadeInDuration: const Duration(seconds: 1),
+                    image: 'https://picsum.photos/350?image=9'
+                )
             );
           } else {
             this.blockchaindata = projectSnap.data;
