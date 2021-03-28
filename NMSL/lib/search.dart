@@ -75,12 +75,16 @@ class _SearchPage extends State<Search> {
           if ((projectSnap.connectionState == ConnectionState.none) ||
               (projectSnap.hasData == null) ||
               (projectSnap.data == null)) {
-            return Container(
-              height: ,
-              width: ,
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.grey[200],
-                valueColor: AlwaysStoppedAnimation(Colors.blue),
+            return Center(
+              child:  Container(
+                height: MediaQuery.of(context).size.height*0.7,
+                width: MediaQuery.of(context).size.width*0.5,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey[200],
+                    valueColor: AlwaysStoppedAnimation(Colors.blue),
+                  ),
+                ),
               ),
             );
 
@@ -119,7 +123,30 @@ class _SearchPage extends State<Search> {
                   ),
                 ),
                 Divider(color: Colors.white,height: 10,),
-                ListView.builder(
+                Container(
+                    padding: EdgeInsets.only(left: 10,right: 10),
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.7,
+                        width: MediaQuery.of(context).size.width*0.15,
+                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.7,
+                        width: MediaQuery.of(context).size.width*0.45,
+                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.7,
+                        width: MediaQuery.of(context).size.width*0.2,
+                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+                      ),
+                    ],
+                  ),
+                )
+                /*ListView.builder(
                   shrinkWrap: true,
                   itemCount: this.blockchaindata.length,
                   itemBuilder: (context,index){
@@ -145,7 +172,7 @@ class _SearchPage extends State<Search> {
                       ),
                     );
                   },
-                ),
+                ),*/
               ],
             ),);
           }
