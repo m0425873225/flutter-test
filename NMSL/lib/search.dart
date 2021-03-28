@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:transparent_image/transparent_image.dart';
 import 'package:NMSL/DropBottom.dart';
+import 'dart:async';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -11,9 +11,6 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  List<DropdownMenuItem<String>> sortItems = [];
-  String _selectedSort = '排序';
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +30,10 @@ class _SearchBarState extends State<SearchBar> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 hintText: "搜尋",
+
                 prefixIcon: Icon(Icons.search, color: Colors.black)),
           )),
+          DropDownStateWidget(),
         ],
       ),
     );
@@ -47,6 +46,9 @@ class Search extends StatefulWidget {
 }
 
 class _SearchPage extends State<Search> {
+  int _time = 120;
+  int _timeMin ;
+  int _timesec ;
   List<blockchainApi> blockchaindata;
   Future<List<blockchainApi>> _futureBlockchain;
   Future<List<blockchainApi>> BlockchainApi() async {
@@ -67,7 +69,18 @@ class _SearchPage extends State<Search> {
       throw Exception(e);
     }
   }
-
+  void timerCountdown(){
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _timeMin = (_time / 60).truncate();
+      _timesec = _time % 60;
+      if (_time==0){
+        timer.cancel();
+      }else{_time--;}
+      print(_time);
+      setState(() {
+      });
+    });
+  }
   FutureBuilder _futureHmapi() {
     return FutureBuilder(
         future: this._futureBlockchain,
@@ -123,9 +136,9 @@ class _SearchPage extends State<Search> {
                   ),
                 ),
                 Divider(color: Colors.white,height: 10,),
-                Container(
-                    padding: EdgeInsets.only(left: 10,right: 10),
-                    child: Row(
+                Expanded(child:  Container(
+                  padding: EdgeInsets.only(left: 10,right: 10),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
@@ -137,6 +150,7 @@ class _SearchPage extends State<Search> {
                         height: MediaQuery.of(context).size.height*0.7,
                         width: MediaQuery.of(context).size.width*0.45,
                         decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+                        child: Text('${_timeMin}:${_timesec}'),
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height*0.7,
@@ -145,7 +159,7 @@ class _SearchPage extends State<Search> {
                       ),
                     ],
                   ),
-                )
+                ))
                 /*ListView.builder(
                   shrinkWrap: true,
                   itemCount: this.blockchaindata.length,
@@ -181,6 +195,7 @@ class _SearchPage extends State<Search> {
 
   @override
   void initState() {
+    timerCountdown();
     this._futureBlockchain = this.BlockchainApi();
     super.initState();
   }
