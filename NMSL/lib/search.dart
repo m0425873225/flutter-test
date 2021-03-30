@@ -30,10 +30,11 @@ class _SearchBarState extends State<SearchBar> {
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 hintText: "搜尋",
-
                 prefixIcon: Icon(Icons.search, color: Colors.black)),
           )),
-          DropDownStateWidget(),
+          Container(
+            child: DropDownStateWidget(),
+          )
         ],
       ),
     );
@@ -47,8 +48,8 @@ class Search extends StatefulWidget {
 
 class _SearchPage extends State<Search> {
   int _time = 120;
-  int _timeMin ;
-  int _timesec ;
+  int _timeMin;
+  int _timesec;
   List<blockchainApi> blockchaindata;
   Future<List<blockchainApi>> _futureBlockchain;
   Future<List<blockchainApi>> BlockchainApi() async {
@@ -69,18 +70,21 @@ class _SearchPage extends State<Search> {
       throw Exception(e);
     }
   }
-  void timerCountdown(){
+
+  void timerCountdown() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       _timeMin = (_time / 60).truncate();
       _timesec = _time % 60;
-      if (_time==0){
+      if (_time == 0) {
         timer.cancel();
-      }else{_time--;}
+      } else {
+        _time--;
+      }
       print(_time);
-      setState(() {
-      });
+      setState(() {});
     });
   }
+
   FutureBuilder _futureHmapi() {
     return FutureBuilder(
         future: this._futureBlockchain,
@@ -89,9 +93,9 @@ class _SearchPage extends State<Search> {
               (projectSnap.hasData == null) ||
               (projectSnap.data == null)) {
             return Center(
-              child:  Container(
-                height: MediaQuery.of(context).size.height*0.7,
-                width: MediaQuery.of(context).size.width*0.5,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width * 0.5,
                 child: Center(
                   child: CircularProgressIndicator(
                     backgroundColor: Colors.grey[200],
@@ -100,67 +104,98 @@ class _SearchPage extends State<Search> {
                 ),
               ),
             );
-
           } else {
             this.blockchaindata = projectSnap.data;
             return Expanded(
               child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 10,right: 10),
-                  child:  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Currency',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          decoration: BoxDecoration(
+                              color: Colors.white10,
+                              border: Border(bottom: BorderSide(width: 3,color: Colors.white10))),
+                          child: IconButton(
+                            icon: Icon(Icons.person),
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Market Cap/24h',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          decoration: BoxDecoration(
+                              color: Colors.white10,
+                              border: Border(bottom: BorderSide(width: 3,color: Colors.white10))),
+                          child: IconButton(
+                            icon: Icon(Icons.menu),
+                          ),
                         ),
-                      ),
-                      Text(
-                        'Price/24h',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
-                        ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Divider(color: Colors.white,height: 10,),
-                Expanded(child:  Container(
-                  padding: EdgeInsets.only(left: 10,right: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height*0.7,
-                        width: MediaQuery.of(context).size.width*0.15,
-                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height*0.7,
-                        width: MediaQuery.of(context).size.width*0.45,
-                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-                        child: Text('${_timeMin}:${_timesec}'),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height*0.7,
-                        width: MediaQuery.of(context).size.width*0.2,
-                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-                      ),
-                    ],
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Currency',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Market Cap/24h',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          'Price/24h',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ))
-                /*ListView.builder(
+                  Divider(
+                    color: Colors.white,
+                    height: 10,
+                  ),
+                  Expanded(
+                      child: Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.15,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white)),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.45,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white)),
+                          child: Text('${_timeMin}:${_timesec}'),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white)),
+                        ),
+                      ],
+                    ),
+                  ))
+                  /*ListView.builder(
                   shrinkWrap: true,
                   itemCount: this.blockchaindata.length,
                   itemBuilder: (context,index){
@@ -187,8 +222,9 @@ class _SearchPage extends State<Search> {
                     );
                   },
                 ),*/
-              ],
-            ),);
+                ],
+              ),
+            );
           }
         });
   }
