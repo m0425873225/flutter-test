@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:NMSL/DropBottom.dart';
 import 'dart:async';
+import 'package:NMSL/searchPage.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -47,9 +48,6 @@ class Search extends StatefulWidget {
 }
 
 class _SearchPage extends State<Search> {
-  int _time = 120;
-  int _timeMin;
-  int _timesec;
   List<blockchainApi> blockchaindata;
   Future<List<blockchainApi>> _futureBlockchain;
   Future<List<blockchainApi>> BlockchainApi() async {
@@ -70,20 +68,15 @@ class _SearchPage extends State<Search> {
       throw Exception(e);
     }
   }
+  int _currentIndex = 0;
+  final List<Widget> _changePage = [PersonPage(),ListPage()];
 
-  void timerCountdown() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      _timeMin = (_time / 60).truncate();
-      _timesec = _time % 60;
-      if (_time == 0) {
-        timer.cancel();
-      } else {
-        _time--;
-      }
-      print(_time);
-      setState(() {});
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
     });
   }
+
 
   FutureBuilder _futureHmapi() {
     return FutureBuilder(
@@ -134,94 +127,7 @@ class _SearchPage extends State<Search> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Currency',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          'Market Cap/24h',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                          ),
-                        ),
-                        Text(
-                          'Price/24h',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.white,
-                    height: 10,
-                  ),
-                  Expanded(
-                      child: Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          width: MediaQuery.of(context).size.width * 0.15,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white)),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white)),
-                          child: Text('${_timeMin}:${_timesec}'),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white)),
-                        ),
-                      ],
-                    ),
-                  ))
-                  /*ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: this.blockchaindata.length,
-                  itemBuilder: (context,index){
-                    return Container(
-                      padding: EdgeInsets.only(left: 10,right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child:Column(
-                              children: [
-                                Text('${blockchaindata[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Text('${blockchaindata[index].marketCapUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                          ),
-                          Container(
-                            child: Text('${blockchaindata[index].priceUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),*/
+                  PersonPage(),
                 ],
               ),
             );
@@ -231,7 +137,6 @@ class _SearchPage extends State<Search> {
 
   @override
   void initState() {
-    timerCountdown();
     this._futureBlockchain = this.BlockchainApi();
     super.initState();
   }

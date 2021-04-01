@@ -77,16 +77,6 @@ class _HomeState extends State<Home> {
     return Container(
       child:Column(
         children: [
-          /*InkWell(
-            onTap: ()async{
-              this.Apitest().then((result){
-                setState(() {
-                  this.datas = result;
-                });
-              });
-            },
-            child:Text('test')
-          ),*/
           Container(
             child:_futureBuilder(),
           )
