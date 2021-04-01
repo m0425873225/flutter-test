@@ -68,6 +68,7 @@ class _SearchPage extends State<Search> {
       throw Exception(e);
     }
   }
+  bool _pageChange = false;
   int _currentIndex = 0;
   final List<Widget> _changePage = [PersonPage(),ListPage()];
 
@@ -110,18 +111,28 @@ class _SearchPage extends State<Search> {
                           width: MediaQuery.of(context).size.width * 0.5,
                           decoration: BoxDecoration(
                               color: Colors.white10,
-                              border: Border(bottom: BorderSide(width: 3,color: Colors.white10))),
+                              border: Border(bottom: BorderSide(width: 3,color: _pageChange?Colors.white24:Colors.purple))),
                           child: IconButton(
-                            icon: Icon(Icons.person),
+                            icon: Icon(Icons.person,color: _pageChange?Colors.white24:Colors.purple,),
+                            onPressed: (){
+                              setState(() {
+                                _pageChange = !_pageChange;
+                              });
+                            },
                           ),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width * 0.5,
                           decoration: BoxDecoration(
                               color: Colors.white10,
-                              border: Border(bottom: BorderSide(width: 3,color: Colors.white10))),
+                              border: Border(bottom: BorderSide(width: 3,color: _pageChange?Colors.purple:Colors.white24))),
                           child: IconButton(
-                            icon: Icon(Icons.menu),
+                            icon: Icon(Icons.menu,color: _pageChange?Colors.purple:Colors.white24,),
+                            onPressed: (){
+                              setState(() {
+                                _pageChange = !_pageChange;
+                              });
+                            },
                           ),
                         ),
                       ],
