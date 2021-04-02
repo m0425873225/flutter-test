@@ -69,14 +69,6 @@ class _SearchPage extends State<Search> {
     }
   }
   bool _pageChange = false;
-  int _currentIndex = 0;
-  final List<Widget> _changePage = [PersonPage(),ListPage()];
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
 
   FutureBuilder _futureHmapi() {
@@ -138,7 +130,7 @@ class _SearchPage extends State<Search> {
                       ],
                     ),
                   ),
-                  PersonPage(),
+                  _pageChange?ListPage():PersonPage(),
                 ],
               ),
             );
