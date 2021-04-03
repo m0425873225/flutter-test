@@ -1,5 +1,7 @@
+import 'package:NMSL/model.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/cupertino.dart';
+import 'package:NMSL/search.dart';
 class PersonPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
