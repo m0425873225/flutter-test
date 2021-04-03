@@ -51,6 +51,7 @@ class _SearchPage extends State<Search> {
   @override
   void initState() {
     getonlinedata();
+    getonlinedata().futureBlockchain=getonlinedata().BlockchainApi();
     super.initState();
   }
 
@@ -111,7 +112,7 @@ class _SearchPage extends State<Search> {
             ),
           ),
           FutureBuilder(
-              future: getonlinedata().futureBlockchain,
+              future: getonlinedata().BlockchainApi(),
               builder: (context, projectSnap) {
                 if ((projectSnap.connectionState == ConnectionState.none) ||
                     (projectSnap.hasData == null) ||

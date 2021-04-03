@@ -52,6 +52,11 @@ class PersonPage extends StatelessWidget{
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white)),
+                      child: FutureBuilder(
+                        future: getonlinedata().BlockchainApi(),
+                        builder:
+
+                      )
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.7,
