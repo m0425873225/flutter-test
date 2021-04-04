@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
   List<TestJson> datas ;
   Future<List<TestJson>> _futuredata;
 
+
   Future<List<TestJson>> Apitest() async{
     try {
       Uri _uri = Uri.parse('https://jsonplaceholder.typicode.com/todos');
@@ -81,7 +82,7 @@ class _HomeState extends State<Home> {
           Center(
             child: InkWell(
               onTap: (){
-                UrlLaunch().urlLaunch('https://bit.ly/3mgKdg9');
+                UrlLaunch().urlLaunch('https://www.pressplay.cc/');
               },
               child: Text('超連結點擊'),
             ),
