@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:NMSL/search.dart';
 class PersonPage extends StatelessWidget{
+  final List<blockchainApi> data;
+  PersonPage({this.data});
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -52,11 +54,14 @@ class PersonPage extends StatelessWidget{
                       width: MediaQuery.of(context).size.width * 0.15,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white)),
-                      child: FutureBuilder(
-                        future: getonlinedata().BlockchainApi(),
-                        builder:
-
-                      )
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: this.data.length,
+                          itemBuilder: (context,index){
+                            return Container(
+                              child: Text('${data[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),
+                            );
+                          }),
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.7,
@@ -73,33 +78,6 @@ class PersonPage extends StatelessWidget{
                   ],
                 ),
               ))
-          /*ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: this.blockchaindata.length,
-                  itemBuilder: (context,index){
-                    return Container(
-                      padding: EdgeInsets.only(left: 10,right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child:Column(
-                              children: [
-                                Text('${blockchaindata[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Text('${blockchaindata[index].marketCapUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                          ),
-                          Container(
-                            child: Text('${blockchaindata[index].priceUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),*/
         ],
       ),
     );
@@ -107,6 +85,8 @@ class PersonPage extends StatelessWidget{
 }
 
 class ListPage extends StatelessWidget{
+  final List<blockchainApi> data;
+  ListPage({this.data});
   @override
   Widget build(BuildContext context) {
     return Expanded(

@@ -130,8 +130,8 @@ class _SearchPage extends State<Search> {
                     ),
                   );
                 } else {
-                  getonlinedata().blockchaindata = projectSnap.data;
-                  return _pageChange ? ListPage() : PersonPage();
+                  /*getonlinedata().blockchaindata = projectSnap.data;*/
+                  return _pageChange ? ListPage(data:projectSnap.data) : PersonPage(data:projectSnap.data);
                 }
               }),
         ],

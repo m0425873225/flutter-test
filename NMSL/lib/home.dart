@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:NMSL/UrlLaunch.dart';
 class HomeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -77,8 +78,16 @@ class _HomeState extends State<Home> {
     return Container(
       child:Column(
         children: [
+          Center(
+            child: InkWell(
+              onTap: (){
+                UrlLaunch().urlLaunch('https://bit.ly/3mgKdg9');
+              },
+              child: Text('超連結點擊'),
+            ),
+          ),
           Container(
-            child:_futureBuilder(),
+            /*child:_futureBuilder(),*/
           )
         ],
       )
