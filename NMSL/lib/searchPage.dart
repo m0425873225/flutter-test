@@ -45,35 +45,47 @@ class PersonPage extends StatelessWidget{
           ),
           Expanded(
               child: Container(
-                padding: EdgeInsets.only(left: 10, right: 10),
+
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       height: MediaQuery.of(context).size.height * 0.7,
-                      width: MediaQuery.of(context).size.width * 0.15,
+                      width: MediaQuery.of(context).size.width *1,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white)),
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: this.data.length,
                           itemBuilder: (context,index){
-                            return Container(
-                              child: Text('${data[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),
+                            return ListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ClipOval(
+                                    child: Image.network(
+                                      'https://miro.medium.com/max/4096/1*6xGKpimmpb9XsU67zMF8ag.png',
+                                      fit: BoxFit.cover,
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height * 0.07,
+                                    width: MediaQuery.of(context).size.width *0.15,
+                                    child: Center(child: Text('${data[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),)),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height * 0.07,
+                                    width: MediaQuery.of(context).size.width *0.6,
+                                      child: Center(child: Text('${data[index].marketCapUsd}',style: TextStyle(color:Colors.white,fontSize: 15),),)),
+                                  Container(
+                                    height: MediaQuery.of(context).size.height * 0.07,
+                                    width: MediaQuery.of(context).size.width *0.10,
+                                    child: Center(child: Text('${data[index].percentChange24h}',style: TextStyle(color:Colors.white,fontSize: 15),),)),
+                                ],
+                              ),
                             );
                           }),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      width: MediaQuery.of(context).size.width * 0.45,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white)),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      width: MediaQuery.of(context).size.width * 0.2,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white)),
                     ),
                   ],
                 ),
@@ -152,33 +164,6 @@ class ListPage extends StatelessWidget{
                   ],
                 ),
               ))
-          /*ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: this.blockchaindata.length,
-                  itemBuilder: (context,index){
-                    return Container(
-                      padding: EdgeInsets.only(left: 10,right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child:Column(
-                              children: [
-                                Text('${blockchaindata[index].symbol}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Text('${blockchaindata[index].marketCapUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                          ),
-                          Container(
-                            child: Text('${blockchaindata[index].priceUsd}',style: TextStyle(color:Colors.white,fontSize: 17),),
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                ),*/
         ],
       ),
     );
