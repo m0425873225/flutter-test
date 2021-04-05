@@ -4,6 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:NMSL/search.dart';
 class PersonPage extends StatelessWidget{
   final List<blockchainApi> data;
+  bool percentChange;
+  void PosOrNeg(index){
+    percentChange = data[index].percentChange24h.startsWith('-');
+  }
   PersonPage({this.data});
   @override
   Widget build(BuildContext context) {
