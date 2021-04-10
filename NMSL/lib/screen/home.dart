@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:NMSL/UrlLaunch.dart';
+import 'file:///D:/github/flutter-test/NMSL/lib/network/connect.dart';
 class HomeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -72,6 +73,7 @@ class _HomeState extends State<Home> {
   void initState(){
     super.initState();
     this._futuredata = this.Apitest();
+    Network.networkCheck().then((result) {print('connect:$result');});
   }
 
   @override
@@ -82,7 +84,9 @@ class _HomeState extends State<Home> {
           Center(
             child: InkWell(
               onTap: (){
-                UrlLaunch().urlLaunch('https://www.pressplay.cc/');
+                /*UrlLaunch().urlLaunch('https://www.pressplay.cc/');*/
+                 return DisconnectDialog().showCupertinoDialog();
+
               },
               child: Text('超連結點擊'),
             ),

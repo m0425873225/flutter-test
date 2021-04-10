@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:NMSL/DropBottom.dart';
 import 'package:NMSL/model.dart';
-import 'package:NMSL/searchPage.dart';
+import 'package:NMSL/screen/searchPage.dart';
 
 class SearchBar extends StatefulWidget {
   @override

@@ -151,7 +151,7 @@ class DrawerClose extends StatelessWidget {
   final double listSize = 20;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+      return Container(
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[

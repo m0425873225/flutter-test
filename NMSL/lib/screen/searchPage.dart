@@ -1,7 +1,7 @@
 import 'package:NMSL/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:NMSL/search.dart';
+import 'file:///D:/github/flutter-test/NMSL/lib/screen/search.dart';
 class PersonPage extends StatelessWidget{
   final List<blockchainApi> data;
   bool percentChange;
@@ -15,7 +15,7 @@ class PersonPage extends StatelessWidget{
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
+            padding: EdgeInsets.only(left: 25, right: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -26,11 +26,14 @@ class PersonPage extends StatelessWidget{
                     fontSize: 15,
                   ),
                 ),
-                Text(
-                  'Market Cap/24h',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15,
+                Container(
+                  padding: EdgeInsets.only(left: 30),
+                  child: Text(
+                    'Market Cap/24h',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
                 Text(
@@ -39,10 +42,11 @@ class PersonPage extends StatelessWidget{
                     color: Colors.grey,
                     fontSize: 15,
                   ),
-                )
+                ),
               ],
             ),
           ),
+          Container(),
           Divider(
             color: Colors.white,
             height: 10,
@@ -56,8 +60,6 @@ class PersonPage extends StatelessWidget{
                     Container(
                       height: MediaQuery.of(context).size.height * 0.7,
                       width: MediaQuery.of(context).size.width *1,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white)),
                       child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: this.data.length,
@@ -70,8 +72,8 @@ class PersonPage extends StatelessWidget{
                                     child: Image.network(
                                       'https://miro.medium.com/max/4096/1*6xGKpimmpb9XsU67zMF8ag.png',
                                       fit: BoxFit.cover,
-                                      width: 20,
-                                      height: 20,
+                                      width: 25,
+                                      height: 25,
                                     ),
                                   ),
                                   Container(

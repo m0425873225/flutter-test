@@ -27,6 +27,7 @@ dependencies:
   url_launcher: ^6.0.3
   shared_preferences: ^2.0.5
   audioplayers: ^0.18.3
+  connectivity: ^3.0.3
   flutter:
     sdk: flutter
 

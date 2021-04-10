@@ -1,10 +1,10 @@
-import 'package:NMSL/search.dart';
+import 'file:///D:/github/flutter-test/NMSL/lib/screen/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:NMSL/home.dart';
-import 'package:NMSL/setting.dart';
+import 'file:///D:/github/flutter-test/NMSL/lib/screen/home.dart';
+import 'file:///D:/github/flutter-test/NMSL/lib/screen/setting.dart';
+import 'file:///D:/github/flutter-test/NMSL/lib/screen/Reserve.dart';
 import 'package:NMSL/DrawerChange.dart';
-import 'package:NMSL/Reserve.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
