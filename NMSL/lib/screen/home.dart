@@ -1,8 +1,8 @@
 import 'dart:convert';
+import 'package:NMSL/network/connect.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:NMSL/UrlLaunch.dart';
-import 'file:///D:/github/flutter-test/NMSL/lib/network/connect.dart';
 class HomeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -83,10 +83,9 @@ class _HomeState extends State<Home> {
         children: [
           Center(
             child: InkWell(
-              onTap: (){
+              onTap: ()async{
                 /*UrlLaunch().urlLaunch('https://www.pressplay.cc/');*/
-                 return DisconnectDialog().showCupertinoDialog();
-
+                Network.networkCheck().then((connectResult) {if(!connectResult){DisconnectDialog().showAlert(context);}});
               },
               child: Text('超連結點擊'),
             ),
