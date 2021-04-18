@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:NMSL/ImageChoose.dart';
+import 'package:NMSL/screen/personalsetting.dart';
 class DrawerChange extends StatefulWidget {
   @override
   _DrawerChange createState() => _DrawerChange();
@@ -92,9 +93,13 @@ class _DrawerChange extends State<DrawerChange> {
     );
   }
 }
-
-class DrawerOpen extends StatelessWidget {
+class DrawerOpen extends StatefulWidget {
+  @override
+  DrawerOpenState createState() => DrawerOpenState();
+}
+class DrawerOpenState extends State<DrawerOpen> {
   final double listSize = 20;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -108,7 +113,7 @@ class DrawerOpen extends StatelessWidget {
               style: TextStyle(fontSize: listSize),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.of(context).pop();
             },
           ),
           ListTile(

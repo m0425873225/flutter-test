@@ -3,28 +3,41 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Network {
+class NetworkConnect{
+
   StreamController controller = StreamController.broadcast();
-  Stream get mystream => controller.stream;
+
+  Stream get myStream => controller.stream;
+
   Connectivity connectivity = Connectivity();
 
-  Future<void> init()async{
-    controller.sink.add({'status':networkCheck(await connectivity.checkConnectivity())});
-    
-}
-  static bool networkCheck(ConnectivityResult event){
-    if (event == ConnectivityResult.mobile ||
-        event == ConnectivityResult.wifi) {
+  void init() async {
+    controller.sink.add({
+      'status': checkConnection(event: await connectivity.checkConnectivity()),
+    });
+    connectivity.onConnectivityChanged.listen((event) {
+      controller.sink.add({
+        'status': checkConnection(event: event),
+      });
+    });
+  }
+
+  static bool checkConnection({ConnectivityResult event}) {
+    if (event == ConnectivityResult.mobile || event == ConnectivityResult.wifi) {
       return true;
     }
     return false;
   }
 
-  @override
-  void dispose() {
+  void cancel() {
     controller.close();
   }
 
+  static final NetworkConnect _instance = NetworkConnect._internal();
+
+  static NetworkConnect get instance => _instance;
+
+  NetworkConnect._internal();
 }
 
 class DisconnectDialog {
@@ -46,8 +59,4 @@ class DisconnectDialog {
           );
         });
   }
-}
-
-class DisconnectCheck {
-
 }

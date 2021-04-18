@@ -3,6 +3,7 @@ import 'package:NMSL/network/connect.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:NMSL/UrlLaunch.dart';
+import 'package:connectivity/connectivity.dart';
 class HomeBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,34 @@ class _HomeState extends State<Home> {
   void initState(){
     super.initState();
     this._futuredata = this.Apitest();
-    Network.networkCheck().then((result) {print('connect:$result');});
+    NetworkConnect.instance.myStream.listen((event) {
+      Map<String,bool> connectEvent = event as Map<String,bool>;
+      if(!connectEvent['status']){
+        showDialog(
+            barrierDismissible: false,
+            context: context, builder: (context){
+          return AlertDialog(
+            title: Center(child:Column(
+              children: [
+                Icon(Icons.perm_scan_wifi,color: Colors.red,),
+                Text('已中斷網路連線'),
+              ],
+            )),
+            actions: <Widget>[
+              FlatButton(
+                child: Center(child: Text('已重新連接'),),
+                onPressed: () async{
+                  if(NetworkConnect.checkConnection(event: await Connectivity().checkConnectivity())){
+                    Navigator.of(context).pop(true);
+                  } else {}
+                },
+              ),
+            ],
+          );
+        },);
+      }else{}
+    });
+    NetworkConnect.instance.init();
   }
 
   @override
@@ -84,8 +112,7 @@ class _HomeState extends State<Home> {
           Center(
             child: InkWell(
               onTap: ()async{
-                /*UrlLaunch().urlLaunch('https://www.pressplay.cc/');*/
-                Network.networkCheck().then((connectResult) {if(!connectResult){DisconnectDialog().showAlert(context);}});
+                UrlLaunch().urlLaunch('https://www.pressplay.cc/');
               },
               child: Text('超連結點擊'),
             ),
