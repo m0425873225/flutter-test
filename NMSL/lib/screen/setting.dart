@@ -24,71 +24,59 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  var _imgPath;
+
   @override
   Widget build(BuildContext context) {
-    List<ElevatedButton> buttons;
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("ImagePicker"),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              _ImageView(_imgPath),
+              RaisedButton(
+                onPressed: _takePhoto,
+                child: Text("拍照"),
+              ),
+              RaisedButton(
+                onPressed: _openGallery,
+                child: Text("選擇照片"),
+              ),
+            ],
+          ),
+        ));
+  }
 
-    String imageLocalPath;
-
-    ElevatedButton chooseButton({
-      @required ImageSource type,
-      @required String text,
-    }) {
-      return ElevatedButton(
-        onPressed: () async {
-          String path = await ImageChooseState.getImage(source: type);
-          if (path == '') {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text("錯誤"),
-                  content: Text("沒有選擇到照片"),
-                );
-              },
-            );
-          } else {
-            setState(() {
-              imageLocalPath = path;
-            });
-          }
-        },
-        child: Text(text),
+  /*圖片控件*/
+  Widget _ImageView(imgPath) {
+    if (imgPath == null) {
+      return Center(
+        child: Text("請選擇圖片或拍照"),
+      );
+    } else {
+      return Image.file(
+        imgPath,
       );
     }
+  }
 
-    @override
-    void initState() {
-      // TODO: implement initState
-      super.initState();
-      buttons = [
-        chooseButton(type: ImageSource.camera, text: "拍照",),
-        chooseButton(type: ImageSource.gallery, text: "相簿",),
-      ];
-    }
 
-    @override
-    Widget build(BuildContext context) {
-      return Container(
-          padding: EdgeInsets.symmetric(horizontal: 20,),
-          child: Center(
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.width * 0.5,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: (imageLocalPath != null)
-                        ? Image.file(File(imageLocalPath))
-                        : Container(),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: buttons,
-                  ),
-                ],
-              )
-          )
-      );
-    }
+  /*拍照*/
+  _takePhoto() async {
+    var image = await ImagePicker().getImage(source: ImageSource.camera);
+
+    setState(() {
+      _imgPath = image;
+    });
+  }
+
+  /*相冊*/
+  _openGallery() async {
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      _imgPath = image;
+    });
   }
 }
